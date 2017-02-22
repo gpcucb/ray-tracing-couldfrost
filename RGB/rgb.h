@@ -1,4 +1,3 @@
-#pragma once
 #ifndef RGB_H
 #define RGB_H
 #include <string>
