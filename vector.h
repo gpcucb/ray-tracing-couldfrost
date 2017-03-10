@@ -5,6 +5,8 @@
 #include <conio.h>
 #include <Windows.h>
 #include <sstream>
+#include <stdio.h>
+#include <iostream>
 using namespace std;
 class vector
 {
@@ -24,6 +26,10 @@ public:
 	void sety(float);
 	void setz(float);
 	void mostrar();
-
+	vector productovectorial(vector);
+	float productoscalar(vector);
+	float modulo2();
+	vector per_escalar(float);
+	void ingresar();
 };
 #endif
