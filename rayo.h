@@ -11,5 +11,9 @@ private:
 public:
 	rayo(void);
 	~rayo(void);
+	vector getpos();
+	vector getdirec();
+	void setpos(vector);
+	void setdirec(vector);
 };
 #endif;

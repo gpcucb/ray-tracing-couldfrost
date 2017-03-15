@@ -63,3 +63,23 @@ void camara::ingresarvalores()
 
 
 }
+void camara::sete(vector a)
+{
+	e=a;
+}
+void camara::setcen(vector a)
+{
+	center=a;
+}
+void camara::setup(vector a)
+{
+	up=a;
+}
+void camara::setfo(float a)
+{
+	fov=a;
+}
+void camara::setdf(float a)
+{
+	df=a;
+}

@@ -13,6 +13,11 @@ public:
 	camara(void);
 	~camara(void);
 	vector geteye();
+	void sete(vector);
+	void setcen(vector);
+	void setup(vector);
+	void setfo(float);
+	void setdf(float);
 	vector vectorw();
 	vector vectoru();
 	vector vectorv();
