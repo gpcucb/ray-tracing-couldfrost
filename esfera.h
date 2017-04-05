@@ -10,10 +10,12 @@ private:
 	vector posicion; 
 	float radio;
 public:
-	esfera(void);
+	esfera();
+	esfera(vector,float);
 	~esfera(void);
-	void interseccion(rayo);
+	void interseccion(rayo,float&,bool&);
 	void setpos(vector);
 	void setra(float);
+	
 };
 #endif

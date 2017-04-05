@@ -15,7 +15,8 @@ private:
 	float y;
 	float z;
 public:
-	vector(void);
+	vector();
+	vector(float,float,float);
 	~vector(void);
 	vector suma_de_vector(vector);
 	vector resta_de_vectores(vector);

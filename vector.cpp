@@ -1,8 +1,13 @@
 #include "vector.h"
 
-
-vector::vector(void)
+vector::vector()
 {
+}
+vector::vector(float a,float b,float c)
+{
+	x=a;
+	y=b;
+	z=c;
 }
 
 
@@ -11,17 +16,13 @@ vector::~vector(void)
 }
 vector vector::suma_de_vector(vector a)
 {
-	a.setx(x+a.getx());
-	a.sety(y+a.gety());
-	a.setz(z+a.getz());
-	return a;
+	vector r(x+a.getx(),y+a.gety(),z+a.getz());
+	return r;
 }
 vector vector::resta_de_vectores(vector a)
 {
-	a.setx(x-a.getx());
-	a.sety(y-a.gety());
-	a.setz(z-a.getz());
-	return a;
+	vector r(x-a.getx(),y-a.gety(),z-a.getz());
+	return r;
 }
 float vector::getx()
 {
@@ -54,13 +55,9 @@ void vector::mostrar()
 vector vector::productovectorial(vector v)
 {
 	
-	vector a;
 	
-	a.setx((y*v.getz())-(z*v.gety()));
 	
-	a.sety((z*v.getx())-(x*v.getz()));
-	
-	a.setz((x*v.gety())-(y*v.getx()));
+	vector a((y*v.getz())-(z*v.gety()),(z*v.getx())-(x*v.getz()),(x*v.gety())-(y*v.getx()));
 	
 	return a;
 }
@@ -82,10 +79,7 @@ float vector::productoscalar(vector v)
 }
 vector vector::per_escalar(float a)
 {
-	vector v;
-	v.setx(x*a);
-	v.sety(y*a);
-	v.setz(z*a);
+	vector v(x*a,y*a,z*a);
 	return v;
 }
 void vector::ingresar()

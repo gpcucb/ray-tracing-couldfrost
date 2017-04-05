@@ -1,8 +1,17 @@
 #include "camara.h"
 
-
-camara::camara(void)
+camara::camara()
 {
+}
+camara::camara(vector ojo,vector u,vector cen,float fo,float d)
+{
+	e=ojo;
+	float PI = 3.1415927;
+	fov=((fo*PI)/180);
+	u=up;
+	center=cen;
+	df=d;
+
 }
 
 
@@ -11,18 +20,14 @@ camara::~camara(void)
 }
 vector camara::vectorw()
 {
-	vector a,r=e.resta_de_vectores(center);
-	a.setx(r.getx()/r.modulo2());
-	a.sety(r.gety()/r.modulo2());
-	a.setz(r.getz()/r.modulo2());
+	vector r=e.resta_de_vectores(center);
+	vector a((r.getx()/r.modulo2())*(-1),(r.gety()/r.modulo2())*(-1),(r.getz()/r.modulo2())*(-1));
 	return a;
 }
 vector camara::vectoru()
 {
-	vector a,r=up.productovectorial(vectorw());
-	a.setx(r.getx()/r.modulo2());
-	a.sety(r.gety()/r.modulo2());
-	a.setz(r.getz()/r.modulo2());
+	vector r=up.productovectorial(vectorw());
+	vector a(r.getx()/r.modulo2(),r.gety()/r.modulo2(),r.getz()/r.modulo2());
 	return a;
 }
 vector camara::vectorv()
@@ -34,7 +39,9 @@ vector camara::vectorv()
 vector camara::calcular_distan(float i ,float j,float nx,float ny)
 {
 	float b,l,r,t,u,v;
+	
 	vector dw,uu,vv;
+	
 	t=df*tan(fov/2);
 	r=(t*nx)/ny;
 	l=-r;

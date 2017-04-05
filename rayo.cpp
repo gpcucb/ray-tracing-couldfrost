@@ -1,8 +1,12 @@
 #include "rayo.h"
 
-
-rayo::rayo(void)
+rayo::rayo()
 {
+}
+rayo::rayo(vector po,vector di)
+{
+	posicion=po;
+	direccion=di;
 }
 
 

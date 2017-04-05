@@ -1,4 +1,3 @@
-#pragma once
 #ifndef RGB_H
 #define RGB_H
 #include <string>
@@ -13,8 +12,15 @@ private:
 	float blue;
 
 public:
-	rgb(void);
+	rgb();
+	rgb(float,float,float);
 	~rgb(void);
+	float getr();
+	float getg();
+	float getb();
+	void setr(float);
+	void setg(float);
+	void setb(float);
 };
 #endif;
 

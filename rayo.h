@@ -9,7 +9,8 @@ private:
 	vector direccion;
 
 public:
-	rayo(void);
+	rayo();
+	rayo(vector,vector);
 	~rayo(void);
 	vector getpos();
 	vector getdirec();

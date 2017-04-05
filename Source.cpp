@@ -1,49 +1,42 @@
 #include "camara.h"
 #include "esfera.h"
 #include "rayo.h"
+#include "triangulo.h"
 using namespace std;
 void main()
 {
-	camara a;
-	esfera es;
-	vector dir,e,c,u,pos;
+	vector dir;
 	rayo r;
 	float nx,ny,fov,df;  
 	fov=39.31;
     df=0.035;
+	//valor triangulo
+	vector a(552.0,8,0.0);
+    vector b(0.0,0.0,0.0);
+    vector c(0.0,0.0,560.0);
+	triangulo tri(a,b,c);
 	// Valores de la cámara
-	e.setx(278);
-	e.sety(273);
-	e.setz(-800);
-	c.setx(278);
-	c.sety(273);
-	c.setz(-700);
-	u.setx(0);
-	u.sety(1);
-	u.setz(0);
-	a.setcen(c);
-	a.sete(e);
-	a.setup(u);
-	a.setdf(df);
-	a.setfo(fov);
+	vector e(278,273,-800);
+	vector ce(278,273,-700);
+	vector u(0,1,0);
+	camara ca(e,u,ce,fov,df);
+	float t;
+	bool res;
     nx = 640.0;
     ny = 480.0;
 
 //Valores de la esfera
-	pos.setx(370);
-	pos.sety(120);
-	pos.setz(370);
-	es.setpos(pos);
-	es.setra(120);
+	vector pos(370,120,370);
+	esfera es(pos,120);
 	for(float i=0;i<nx;i++)
 	{
 		for(float j=0;j<ny;j++)
 		{
-			dir=a.calcular_distan(i,j,nx,ny);
+			dir=ca.calcular_distan(i,j,nx,ny);
 			dir.mostrar();
 			r.setpos(e);
 			r.setdirec(dir);
-			es.interseccion(r);
+			es.interseccion(r,t,res);
 		}
 	}
 	

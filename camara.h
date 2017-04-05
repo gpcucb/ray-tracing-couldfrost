@@ -10,7 +10,8 @@ class camara
 	float fov; 
 	float df;
 public:
-	camara(void);
+	camara();
+	camara(vector,vector,vector,float,float);
 	~camara(void);
 	vector geteye();
 	void sete(vector);
@@ -24,5 +25,6 @@ public:
 	vector calcular_distan(float i,float j,float nx,float ny);
 	void ingresarvalores();
 	
+
 };
 #endif;
