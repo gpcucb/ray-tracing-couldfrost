@@ -15,11 +15,14 @@ class RayTracer < Renderer
   def initialize(width, height)
     super(width, height, 250.0, 250.0, 250.0)
     #light values
-    light_color = Rgb.new(0.8,0.7,0.6)
-    light_position = Vector.new(0.0, 0.0, 200.0)
+    light_color = Rgb.new(1.8,2.7,2.6)
+    light_position = Vector.new(300.0, 100.0, 0.0)
     @light = Light.new(light_position,light_color)
-    @ambient_light = Rgb.new(0.15,0.15,0.15)
-    @ka = @kd
+    #@ambient_light = Rgb.new(0.15,0.15,0.15)
+    #@ka = @kd
+    light_color2 = Rgb.new(1.8,2.7,2.6)
+    light_position2 = Vector.new(10.0, 0.0, 100.0)
+    @light2 = Light.new(light_position2,light_color2)
 
     @nx = @width
     @ny = @height
@@ -92,6 +95,43 @@ class RayTracer < Renderer
     @objects << @sphere << @sphere2 << @sphere3 << @triangle2 << @triangle 
   end
 
+  def max(number1,number2)
+    if number1 > number2
+      return number1
+    else
+      return number2
+    end
+  end
+
+  def lamberthianShading(intersectionPoint, intersectionNormal, ray, light, object)
+    n = intersectionNormal.normalize
+    l = light.position.minus(intersectionPoint).normalize
+    nl = n.scalar_product(l)
+    max = max(0,nl)
+    kd = object.material.diffuse
+    kdI = kd.multiply_color(light.color)
+    return kdI.scalar_color(max)
+  end
+
+  def blinnPhongShading(intersectionPoint, intersectionNormal, ray, light, object)
+    n = intersectionNormal.normalize
+    v = ray.position.minus(intersectionPoint).normalize
+    l = light.position.minus(intersectionPoint).normalize
+    h = v.plus(l).normalize
+    nh = n.scalar_product(h)
+    ks = object.material.specular
+    power = object.material.power
+    ksI = ks.multiply_color(light.color)
+    max = max(0,nh)
+
+    return ksI.scalar_color(max**power)
+  end
+
+  def ambientShading(object)
+    @ambientLight = Rgb.new(0.003,0.003,0.003)
+    ka = object.material.diffuse
+    return @ambientLight.multiply_color(ka)
+  end
   def calculate_pixel(i, j)
     e = @camera.e
     dir = @camera.ray_direction(i,j,@nx,@ny)
@@ -107,9 +147,22 @@ class RayTracer < Renderer
       end
     end
     if @obj_int==nil
-      color = Rgb.new(0.0,0.0,0.0)
+      color = Rgb.new(0.8,1.0,1.5)
     else
-      color = @obj_int.material.diffuse #2D
+      #color = @obj_int.material.diffuse #2D
+      intersectionPoint = ray.position.plus(ray.direction.num_product(t))
+      intersectionNormal = @obj_int.normal(intersectionPoint)
+      lamberShadow = lamberthianShading(intersectionPoint, intersectionNormal, ray, @light, @obj_int)
+      blinnPhong = blinnPhongShading(intersectionPoint, intersectionNormal, ray, @light, @obj_int)
+      ambientShadow = ambientShading(@obj_int)
+      lamberShadow2 = lamberthianShading(intersectionPoint, intersectionNormal, ray, @light2, @obj_int)
+      blinnPhong2 = blinnPhongShading(intersectionPoint, intersectionNormal, ray, @light2, @obj_int)
+      puts "lambert r:#{lamberShadow.r} g:#{lamberShadow.g} b:#{lamberShadow.b}"
+      puts "blinnPhong r:#{blinnPhong.r} g:#{blinnPhong.g} b:#{blinnPhong.b}"
+      puts "ambientShadow r:#{ambientShadow.r} g:#{ambientShadow.g} b:#{ambientShadow.b}"
+      #color = lamberShadow
+      color = blinnPhong.plus_color(lamberShadow).plus_color(ambientShadow)
+
     end
 
     return {red: color.r, green: color.g, blue: color.b}
